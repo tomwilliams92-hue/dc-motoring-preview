@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB" data-logo="a" data-palette="dan" data-font="cabin">
+<html lang="en-GB" data-logo="a" data-palette="dan" data-font="cabin" data-car="mclaren">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,25 +91,25 @@ nav.main a:hover{color:var(--head-ink);border-color:var(--accent)}
 .menu-btn svg{width:28px;height:28px}
 
 /* hero */
-.hero{padding:0;background:var(--hero-bg);color:var(--text);border-bottom:1px solid var(--line);overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.12fr;align-items:center;gap:20px}
-.hero-text{padding:44px 0 52px;position:relative;z-index:1}
-.hero h1{font-size:clamp(42px,5vw,68px);line-height:1.03;max-width:11ch;color:var(--hero-ink)}
-.hero .lead{font-size:19.5px;color:var(--muted);max-width:29em;margin-top:22px}
-.brief{margin-top:32px;background:var(--hero-bg);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:0 14px 34px rgba(13,47,31,.08)}
+.hero{padding:0;display:grid;grid-template-columns:1fr 1.1fr;min-height:640px;background:var(--brand);color:var(--on-brand)}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:64px 56px 64px max(24px,calc((100vw - 1200px)/2 + 24px));position:relative;z-index:1}
+.hero h1{font-size:clamp(42px,5vw,68px);line-height:1.03;max-width:11ch;color:var(--on-brand)}
+.hero .lead{font-size:19.5px;color:var(--on-brand-muted);max-width:29em;margin-top:22px}
+.brief{margin-top:32px;background:#fff;border-radius:8px;padding:18px;box-shadow:0 18px 40px rgba(0,0,0,.22);max-width:560px}
 .brief label{display:block;font-weight:600;font-size:15px;margin-bottom:10px;color:var(--text)}
 .brief-row{display:flex;gap:10px}
 .brief input,.brief select{height:52px;font:16px var(--font);color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:0 14px;outline:none;min-width:0}
 .brief input{flex:1.5}.brief select{flex:.9;cursor:pointer}
-.brief input:focus,.brief select:focus{border-color:var(--hero-ink)}
+.brief input:focus,.brief select:focus{border-color:var(--brand)}
 .brief .btn{height:52px;white-space:nowrap}
 .brief .or{font-size:14px;color:var(--muted);margin-top:10px}
-.brief .or a{color:var(--hero-ink);font-weight:600;text-decoration:none}
-.trust{list-style:none;display:flex;gap:22px;margin:22px 0 0;padding:0;flex-wrap:wrap;font-size:15px}
+.brief .or a{color:var(--brand);font-weight:600;text-decoration:none}
+.trust{list-style:none;display:flex;gap:22px;margin:24px 0 0;padding:0;flex-wrap:wrap;font-size:15px;color:var(--on-brand-muted)}
 .trust li{display:flex;align-items:center;gap:7px}
 .trust svg{width:16px;height:16px;color:var(--accent)}
-.hero-img{margin-right:calc(-1 * max(24px, (100vw - 1200px) / 2 + 24px));align-self:stretch;padding:32px 0;display:flex}
-.hero-img img{width:100%;height:100%;min-height:440px;object-fit:cover;object-position:100% 66%;border-radius:14px 0 0 14px}
+.hero-img{position:relative;overflow:hidden}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,60% 50%)}
+.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--brand) 0%,color-mix(in srgb,var(--brand) 86%,transparent) 8%,color-mix(in srgb,var(--brand) 66%,transparent) 18%,color-mix(in srgb,var(--brand) 42%,transparent) 30%,color-mix(in srgb,var(--brand) 20%,transparent) 42%,color-mix(in srgb,var(--brand) 6%,transparent) 54%,transparent 64%)}
 .rise{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
 .rise:nth-child(2){animation-delay:.08s}.rise:nth-child(3){animation-delay:.16s}.rise:nth-child(4){animation-delay:.24s}.rise:nth-child(5){animation-delay:.32s}
 @keyframes rise{to{opacity:1;transform:none}}
@@ -251,8 +251,11 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
   .topbar .tb-hide{display:none}.topbar .wrap{gap:14px}
   .head-cta{display:none}
   .menu-btn{display:block}
-  .hero .wrap{grid-template-columns:1fr;min-height:0;gap:0}
-  .hero-text{padding:22px 0 6px}
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-img{order:-1;aspect-ratio:4/3.1}
+  .hero-img img{object-position:var(--mpos,60% 50%)}
+  .hero-img::after{background:linear-gradient(0deg,var(--brand) 0%,color-mix(in srgb,var(--brand) 75%,transparent) 10%,color-mix(in srgb,var(--brand) 40%,transparent) 24%,color-mix(in srgb,var(--brand) 12%,transparent) 38%,transparent 50%)}
+  .hero-text{padding:8px 16px 48px}
   .hero h1{font-size:40px}
   .hero .lead{font-size:18px;margin-top:16px}
   .brief{padding:14px;margin-top:24px}
@@ -260,8 +263,6 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
   .brief input,.brief select{flex:none;height:50px}
   .brief .btn{width:100%;justify-content:center}
   .trust{gap:8px 18px;font-size:14px}
-  .hero-img{margin:0 -16px;padding:8px 0 0}
-  .hero-img img{min-height:0;aspect-ratio:3/2;border-radius:0;object-position:85% 66%}
   .grid3{grid-template-columns:1fr;gap:20px;margin-top:32px}
   .steps{grid-template-columns:1fr;margin-top:36px;row-gap:28px}
   .num{font-size:36px}
@@ -289,6 +290,7 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
   <b>Example website for Dan</b>
   <div class="grp"><span>Logo</span><button data-set="logo" data-val="a" title="Your monogram">A</button><button data-set="logo" data-val="b" title="The GT">B</button><button data-set="logo" data-val="c" title="Signature and GT">C</button><button data-set="logo" data-val="d" title="Your name">D</button><button data-set="logo" data-val="e" title="Signature">E</button><button data-set="logo" data-val="f" title="Modern">F</button></div>
   <div class="grp"><span>Colours</span><button data-set="palette" data-val="dan">Your green</button><button data-set="palette" data-val="classic">Classic racing green</button></div>
+  <div class="grp gcar"><span>Car</span><button data-set="car" data-val="mclaren">McLaren</button><button data-set="car" data-val="aston">Aston Martin</button><button data-set="car" data-val="bentley">Bentley</button><button data-set="car" data-val="jaguar">Jaguar</button></div>
   <div class="grp gfont"><span>Font</span><button data-set="font" data-val="cabin">Cabin</button><button data-set="font" data-val="jost">Jost</button><button data-set="font" data-val="serif">Serif</button></div>
   <span class="note">Example website by Tomoni. Not live yet. Wording and most photos are examples.</span>
 </div>
@@ -321,7 +323,6 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
 
 <main id="top">
 <section class="hero">
-  <div class="wrap">
     <div class="hero-text">
       <h1 class="rise">The car you want, found for you.</h1>
       <p class="lead rise">Tell me the make, model, spec and budget. I'll search the UK, check every detail and bring the right car to you.</p>
@@ -336,8 +337,7 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
       </form>
       <ul class="trust rise"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>UK-wide search</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Every car checked</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>One person, start to finish</li></ul>
     </div>
-    <div class="hero-img"><img src="img/web/ftype-r-plate-1800.jpg" alt="A Jaguar F-Type R, the kind of car Dan sources"></div>
-  </div>
+    <div class="hero-img"><img src="img/web/mcl-night-1800.jpg" alt="A McLaren 720S at night, the kind of car Dan sources"></div>
 </section>
 
 <section id="how" class="alt">
@@ -376,55 +376,7 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
       <div><h2>Cars I've sourced</h2><span class="coach"></span><p class="intro">A few recent finds, and how long each one took.</p></div>
       <a class="link" href="#call">Ask me to find yours <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
-    <div class="grid3">
-      <article class="car">
-        <div class="car-img"><img src="img/web/rrs-2023-900.jpg" alt="Range Rover Sport Dynamic SE" loading="lazy"></div>
-        <div class="car-body">
-          <h3>Range Rover Sport Dynamic SE</h3>
-          <p class="meta">2023 <span>·</span> Found in 11 days</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to Preston</p>
-        </div>
-      </article>
-      <article class="car">
-        <div class="car-img"><img src="img/web/p992-ring-900.jpg" alt="Porsche 911 Carrera S (992)" loading="lazy"></div>
-        <div class="car-body">
-          <h3>Porsche 911 Carrera S (992)</h3>
-          <p class="meta">2021 <span>·</span> Found in 3 weeks</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to Cheshire</p>
-        </div>
-      </article>
-      <article class="car">
-        <div class="car-img"><img src="img/web/defender-110-900.jpg" alt="Land Rover Defender 110 X-Dynamic" loading="lazy"></div>
-        <div class="car-body">
-          <h3>Land Rover Defender 110 X-Dynamic</h3>
-          <p class="meta">2022 <span>·</span> Found in 9 days</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to Bolton</p>
-        </div>
-      </article>
-      <article class="car">
-        <div class="car-img"><img src="img/web/rs6-dusk-900.jpg" alt="Audi RS6 Avant Carbon Black" loading="lazy"></div>
-        <div class="car-body">
-          <h3>Audi RS6 Avant Carbon Black</h3>
-          <p class="meta">2021 <span>·</span> Found in 2 weeks</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to Manchester</p>
-        </div>
-      </article>
-      <article class="car">
-        <div class="car-img"><img src="img/web/conti-gt-900.jpg" alt="Bentley Continental GT V8" loading="lazy"></div>
-        <div class="car-body">
-          <h3>Bentley Continental GT V8</h3>
-          <p class="meta">2020 <span>·</span> Found in 4 weeks</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to the Lake District</p>
-        </div>
-      </article>
-      <article class="car">
-        <div class="car-img"><img src="img/web/bmw-green-900.jpg" alt="BMW M4 Competition" loading="lazy"></div>
-        <div class="car-body">
-          <h3>BMW M4 Competition</h3>
-          <p class="meta">2022 <span>·</span> Found in 8 days</p>
-          <p class="where"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>Delivered to Leeds</p>
-        </div>
-      </article>
+    <div class="grid3">{"mclaren": {"src": "img/web/mcl-night-1800.jpg", "pos": "58% 52%", "mpos": "62% 50%", "alt": "A McLaren 720S at night, the kind of car Dan sources"}, "aston": {"src": "img/web/dbs-garage-1800.jpg", "pos": "50% 60%", "mpos": "50% 60%", "alt": "An Aston Martin DBS Superleggera, the kind of car Dan sources"}, "bentley": {"src": "img/web/conti-gt-1800.jpg", "pos": "55% 58%", "mpos": "55% 60%", "alt": "A Bentley Continental GT, the kind of car Dan sources"}, "jaguar": {"src": "img/web/ftype-r-plate-1800.jpg", "pos": "78% 62%", "mpos": "80% 62%", "alt": "A Jaguar F-Type R, the kind of car Dan sources"}}
     </div>
   </div>
 </section>
@@ -551,13 +503,15 @@ footer li svg{width:17px;height:17px;color:var(--accent)}
 
 <script>
 const H = document.documentElement, Q = new URLSearchParams(location.search);
-['logo','palette','font'].forEach(k => { if (Q.get(k)) H.dataset[k] = Q.get(k); });
+['logo','palette','font','car'].forEach(k => { if (Q.get(k)) H.dataset[k] = Q.get(k); });
+const CARS = {"mclaren": {"src": "img/web/mcl-night-1800.jpg", "pos": "58% 52%", "mpos": "62% 50%", "alt": "A McLaren 720S at night, the kind of car Dan sources"}, "aston": {"src": "img/web/dbs-garage-1800.jpg", "pos": "50% 60%", "mpos": "50% 60%", "alt": "An Aston Martin DBS Superleggera, the kind of car Dan sources"}, "bentley": {"src": "img/web/conti-gt-1800.jpg", "pos": "55% 58%", "mpos": "55% 60%", "alt": "A Bentley Continental GT, the kind of car Dan sources"}, "jaguar": {"src": "img/web/ftype-r-plate-1800.jpg", "pos": "78% 62%", "mpos": "80% 62%", "alt": "A Jaguar F-Type R, the kind of car Dan sources"}};
+function setCar(){ const c = CARS[H.dataset.car] || CARS.mclaren, i = document.querySelector('.hero-img img'); i.src = c.src; i.alt = c.alt; i.style.setProperty('--pos', c.pos); i.style.setProperty('--mpos', c.mpos); }
 function mark(){ document.querySelectorAll('.mock button').forEach(b => b.classList.toggle('on', H.dataset[b.dataset.set] === b.dataset.val)); }
 document.querySelectorAll('.mock button').forEach(b => b.onclick = () => {
-  H.dataset[b.dataset.set] = b.dataset.val; mark();
+  H.dataset[b.dataset.set] = b.dataset.val; mark(); if (b.dataset.set === 'car') setCar();
   const u = new URL(location); u.searchParams.set(b.dataset.set, b.dataset.val); history.replaceState(null, '', u);
 });
-mark();
+mark(); setCar();
 document.querySelectorAll('.times button').forEach(b => b.onclick = () => { document.querySelectorAll('.times button').forEach(x => x.classList.remove('on')); b.classList.add('on'); });
 function brief(e){ e.preventDefault(); const m = document.getElementById('bm').value.trim(), b = document.getElementById('bb').value; document.getElementById('w').value = [m, b].filter(Boolean).join(', '); document.getElementById('call').scrollIntoView({behavior:'smooth'}); setTimeout(() => document.getElementById('n').focus({preventScroll:true}), 500); return false; }
 function sent(e){ e.preventDefault(); const n = document.getElementById('n').value.trim().split(' ')[0]; document.getElementById('tn').textContent = n ? ', ' + n : ''; document.getElementById('form').classList.add('done'); return false; }
