@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DC Motoring menu</title>
+<meta property="og:title" content="DC Motoring: pick what you want">
+<meta property="og:description" content="Turn things on or off and the prices add up for you.">
+<meta property="og:image" content="https://tomwilliams92-hue.github.io/dc-motoring-preview/img/share.jpg">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FBF8F1;--card:#FFFFFF;--text:#15261D;--muted:#4A5A50;
+  --brand:#0D2F1F;--on-brand:#F5E8D5;--accent:#AD935A;--line:#E3DED2;--off:#C9C4B8;--tint:#F1EDE3;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:19px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:.01em;padding-bottom:110px}
+header{background:var(--brand);padding:18px 16px}
+header img{display:block;height:34px;width:auto;margin:0 auto}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 0;display:grid;gap:8px}
+h1{font-size:30px;line-height:1.25;margin:0 0 8px;color:var(--brand)}
+.intro{margin:0 0 22px;color:var(--muted)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:18px;margin:0 0 16px;transition:border-color .2s,opacity .2s}
+.card.on{border-color:var(--brand)}
+.card.locked{opacity:.55}
+.top{display:flex;align-items:center;gap:12px}
+.top h2{flex:1;font-size:22px;line-height:1.3;margin:0}
+.prices{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{background:var(--tint);border-radius:8px;padding:2px 10px;font-weight:600}
+.chip.free{background:#E3EEE6;color:var(--brand)}
+.card:not(.on) .chip{color:var(--muted);font-weight:400}
+ul{margin:12px 0 0;padding-left:22px}
+li{margin:4px 0}
+.needs{margin:10px 0 0;font-weight:600;color:var(--muted)}
+.switch{flex:none;width:64px;height:36px;border-radius:18px;border:0;background:var(--off);position:relative;cursor:pointer;padding:0}
+.switch::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:#fff;transition:transform .2s}
+.switch[aria-checked="true"]{background:var(--brand)}
+.switch[aria-checked="true"]::after{transform:translateX(28px)}
+.switch:disabled,.seg button:disabled{cursor:not-allowed}
+.say{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;padding:0}
+.say svg{width:22px;height:22px;fill:var(--brand)}
+.seg{display:flex;flex-direction:column;gap:8px;margin:14px 0 0}
+.seg button{font:inherit;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer;color:var(--text)}
+.seg button b{display:block}
+.seg button span{color:var(--muted)}
+.seg button[aria-checked="true"]{border-color:var(--brand);background:var(--brand);color:var(--on-brand)}
+.seg button[aria-checked="true"] span{color:var(--on-brand)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.done{font-weight:600;color:var(--brand)}
+
+/* your price */
+.receipt{background:var(--brand);color:var(--on-brand);border-radius:14px;padding:20px;margin:0 0 24px;scroll-margin-top:16px}
+.receipt h2{font-size:24px;margin:0 0 12px;color:#fff}
+.rows{display:grid;grid-template-columns:minmax(0,1fr) auto auto;column-gap:14px;font-size:17px}
+.rows > *{padding:7px 0;border-bottom:1px solid rgba(245,232,213,.16)}
+.rows .h{font-size:15px;opacity:.8;padding-top:0}
+.rows .n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rows .none{grid-column:1/-1;opacity:.8}
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+.totals small{display:block;font-size:16px;opacity:.85}
+.totals b{display:inline-block;font-size:34px;line-height:1.2;color:#fff;border-radius:6px;padding:0 4px;margin-left:-4px;font-variant-numeric:tabular-nums}
+.totals em{display:block;font-style:normal;font-size:15px;opacity:.85}
+.small{font-size:15px;opacity:.85;margin:10px 0 0}
+.acts{display:flex;gap:10px;margin-top:16px}
+.acts button,.acts a{flex:1;font:inherit;font-size:17px;font-weight:600;text-align:center;text-decoration:none;border-radius:10px;padding:10px 8px;cursor:pointer}
+.acts .read{background:transparent;color:var(--on-brand);border:2px solid var(--accent)}
+.acts .send{background:var(--accent);color:var(--brand);border:2px solid var(--accent)}
+@keyframes bump{0%{background:var(--accent);color:var(--brand)}100%{background:transparent}}
+.bump{animation:bump .8s ease-out}
+
+/* phone: totals pinned at the bottom, tap to see the list */
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--brand);color:var(--on-brand);border:0;border-top:3px solid var(--accent);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:16px;font:inherit;text-align:left;cursor:pointer;width:100%}
+.bar div{flex:1}
+.bar small{display:block;font-size:15px;opacity:.85}
+.bar b{display:inline-block;font-size:26px;line-height:1.2;color:#fff;border-radius:6px;padding:0 4px;margin-left:-4px}
+.bar span{font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+@media (min-width:900px){
+  body{padding-bottom:40px}
+  .wrap{grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start}
+  .intro-wrap{grid-column:1/-1}
+  .receipt{position:sticky;top:24px}
+  .bar{display:none}
+}
+@media (prefers-reduced-motion:reduce){.bump{animation:none}.switch::after{transition:none}}
+</style>
+</head>
+<body>
+<header><img src="img/logo.svg" alt="DC Motoring"></header>
+<div class="wrap">
+  <div class="intro-wrap">
+    <h1>Pick what you want</h1>
+    <p class="intro">Turn things on or off. Your one-off and monthly prices change as you go. Tap the speaker to hear any part read out.</p>
+  </div>
+
+  <main>
+    <section class="card on">
+      <div class="top"><h2>Logo and business cards</h2></div>
+      <div class="prices"><span class="chip free">Free</span><span class="done">Done</span></div>
+    </section>
+    <div id="menu"></div>
+  </main>
+
+  <aside class="receipt" id="price" aria-live="polite">
+    <h2>Your price</h2>
+    <div class="rows" id="rows"></div>
+    <div class="totals">
+      <div><small>One-off</small><b id="oneoff">£0</b><em id="half"></em></div>
+      <div><small>Monthly</small><b id="monthly">£0</b><em>once it's all live</em></div>
+    </div>
+    <p class="small">No VAT. Half of the one-off to start, half when it's live.</p>
+    <div class="acts">
+      <button class="read" id="readAll" type="button">Read it out</button>
+      <a class="send" id="send" href="#">Send to Tom</a>
+    </div>
+  </aside>
+</div>
+
+<button class="bar" id="bar" type="button" aria-label="See your price">
+  <div><small>One-off</small><b id="barOneoff">£0</b></div>
+  <div><small>Monthly</small><b id="barMonthly">£0</b></div>
+  <span>See list</span>
+</button>
+
+<script>
+// One-off and monthly prices per part. Everything + monthly articles = £950 + £119; report alone = £350 + £39.
+const MENU = [
+  {id:'site', name:'Website', oneoff:300, monthly:40, what:[
+    'Set up so people find you on Google',
+    'I keep it running and make changes when you need them',
+    'I add the cars you source and reply to your Google reviews',
+    'A short update on your phone each month']},
+  {id:'emails', name:'Enquiry and aftercare emails', oneoff:150, monthly:0, needs:'site', what:[
+    'Every enquiry gets a reply straight away',
+    'After the sale: a thank you, then a request for a review',
+    'Check-ins later on, so they come back for their next car']},
+  {id:'crm', name:'Lead tracker on your phone', oneoff:150, monthly:0, needs:'site', what:[
+    'Every client in one place, from first call to keys',
+    'It fills itself in. No admin for you']},
+  {id:'report', name:'Client reports', choices:[
+    {id:'off', label:'No thanks', oneoff:0, monthly:0, what:[]},
+    {id:'look', label:'New look', oneoff:95, monthly:0, what:[
+      'Your report, redesigned to look the part',
+      'You fill it in, as you do now']},
+    {id:'auto', label:'On autopilot', oneoff:350, monthly:39, what:[
+      'You send a voice note on the cars, with the adverts',
+      'The report comes back ready, usually within 15 minutes',
+      'You check it, tap approve, and it goes to your client',
+      'The new look is included']}]},
+  {id:'google', name:'Articles and Google posts', needs:'site', choices:[
+    {id:'off', label:'No thanks', oneoff:0, monthly:0, what:[]},
+    {id:'monthly', label:'Monthly', oneoff:0, monthly:40, what:[
+      '1 article a month, written in your voice',
+      '1 post a month on your Google profile',
+      'You approve each one on your phone']},
+    {id:'weekly', label:'Weekly', oneoff:0, monthly:80, what:[
+      '1 article and 1 Google post every week',
+      'A page on your site for each car you source',
+      'A check on where you show up in Google',
+      'Helps you show up on Google quicker']}]},
+];
+// starting picks = Option 3 with the monthly articles (what Dan has already been quoted)
+let picks = {site:true, emails:true, crm:true, report:'auto', google:'monthly'};
+try { const s = JSON.parse(localStorage.getItem('dcm-picks')); if (s) picks = Object.assign(picks, s); } catch (e) {}
+
+const $ = id => document.getElementById(id);
+const gbp = n => '£' + n.toLocaleString('en-GB', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
+const priceText = (o, m) => [o ? gbp(o) + ' one-off' : '', m ? gbp(m) + ' monthly' : ''].filter(Boolean).join(', plus ');
+const SPEAK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+
+const locked = item => item.needs && !picks[item.needs];
+function current(item) {
+  if (locked(item)) return null;
+  if (item.choices) { const c = item.choices.find(c => c.id === picks[item.id]); return c && c.id !== 'off' ? c : null; }
+  return picks[item.id] ? item : null;
+}
+const chosen = () => MENU.map(i => ({item: i, c: current(i)})).filter(x => x.c);
+const label = x => x.item.choices ? x.item.name + ': ' + x.c.label.toLowerCase() : x.item.name;
+const sums = () => chosen().reduce((a, x) => ({oneoff: a.oneoff + x.c.oneoff, monthly: a.monthly + x.c.monthly}), {oneoff: 0, monthly: 0});
+
+function setNum(id, text) {
+  const el = $(id);
+  if (el.textContent === text) return;
+  el.textContent = text;
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+}
+
+function render() {
+  $('menu').innerHTML = MENU.map(item => {
+    const lock = locked(item), cur = current(item), dis = lock ? ' disabled' : '';
+    let body;
+    if (item.choices) {
+      const pick = item.choices.find(c => c.id === picks[item.id]) || item.choices[0];
+      body = `<div class="seg" role="radiogroup" aria-label="${item.name}">` + item.choices.map(c =>
+        `<button type="button" role="radio" aria-checked="${!lock && c.id === pick.id}" data-item="${item.id}" data-choice="${c.id}"${dis}>
+           <b>${c.label}</b>${c.oneoff || c.monthly ? `<span>${priceText(c.oneoff, c.monthly)}</span>` : ''}</button>`).join('') + '</div>'
+        + (!lock && pick.what.length ? '<ul>' + pick.what.map(w => `<li>${w}</li>`).join('') + '</ul>' : '');
+    } else {
+      body = `<div class="prices"><span class="chip">${gbp(item.oneoff)} one-off</span>
+                <span class="chip">${item.monthly ? gbp(item.monthly) + ' monthly' : 'Nothing monthly'}</span></div>
+              <ul>${item.what.map(w => `<li>${w}</li>`).join('')}</ul>`;
+    }
+    const sw = item.choices ? '' :
+      `<button type="button" class="switch" role="switch" aria-checked="${!lock && !!picks[item.id]}" aria-label="${item.name}" data-item="${item.id}"${dis}></button>`;
+    return `<section class="card${cur ? ' on' : ''}${lock ? ' locked' : ''}">
+      <div class="top"><h2>${item.name}</h2>
+        <button type="button" class="say" aria-label="Read out ${item.name}" data-say="${item.id}">${SPEAK}</button>${sw}</div>
+      ${lock ? '<p class="needs">Needs the website</p>' : ''}${body}</section>`;
+  }).join('');
+
+  const list = chosen();
+  $('rows').innerHTML = '<span class="h">You picked</span><span class="h n">One-off</span><span class="h n">Monthly</span>'
+    + (list.length ? list.map(x => `<span>${label(x)}</span><span class="n">${x.c.oneoff ? gbp(x.c.oneoff) : '–'}</span><span class="n">${x.c.monthly ? gbp(x.c.monthly) : '–'}</span>`).join('')
+                   : '<span class="none">Nothing yet</span>');
+  const t = sums();
+  setNum('oneoff', gbp(t.oneoff)); setNum('monthly', gbp(t.monthly));
+  setNum('barOneoff', gbp(t.oneoff)); setNum('barMonthly', gbp(t.monthly));
+  $('half').textContent = t.oneoff ? gbp(t.oneoff / 2) + ' to start' : '';
+  $('send').href = 'https://wa.me/?text=' + encodeURIComponent(summary(true));
+  try { localStorage.setItem('dcm-picks', JSON.stringify(picks)); } catch (e) {}
+}
+
+function summary(forTom) {
+  const list = chosen().map(label), t = sums();
+  const totals = 'One-off: ' + gbp(t.oneoff) + '. Monthly: ' + gbp(t.monthly) + '.';
+  if (forTom) return 'Hi Tom, here are my picks:\n' + (list.length ? list.map(n => '- ' + n).join('\n') : 'Nothing yet') + '\n\n' + totals;
+  return 'You have picked: ' + (list.length ? list.join(', ') : 'nothing yet') + '. ' + totals;
+}
+
+function itemText(id) {
+  const item = MENU.find(i => i.id === id);
+  if (locked(item)) return item.name + '. This needs the website.';
+  if (item.choices) return item.name + '. ' + item.choices.filter(c => c.id !== 'off')
+    .map(c => c.label + ': ' + priceText(c.oneoff, c.monthly) + '. ' + c.what.join('. ') + '.').join(' ');
+  return item.name + '. ' + priceText(item.oneoff, item.monthly) + '. ' + item.what.join('. ') + '.';
+}
+
+function say(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/£/g, ' £'));
+  const v = speechSynthesis.getVoices().find(v => v.lang === 'en-GB');
+  if (v) u.voice = v;
+  u.lang = 'en-GB'; u.rate = .95;
+  speechSynthesis.speak(u);
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b || b.disabled) return;
+  if (b.dataset.say) return say(itemText(b.dataset.say));
+  if (b.dataset.choice) { picks[b.dataset.item] = b.dataset.choice; return render(); }
+  if (b.dataset.item) { picks[b.dataset.item] = !picks[b.dataset.item]; return render(); }
+  if (b.id === 'readAll') return say(summary(false));
+  if (b.id === 'bar') $('price').scrollIntoView({behavior: 'smooth'});
+});
+render();
+</script>
+</body>
+</html>
